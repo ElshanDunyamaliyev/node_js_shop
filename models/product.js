@@ -10,32 +10,22 @@ module.exports = class Product {
 
   save() {
     this.id = Math.random().toString();
-    const productData = JSON.stringify(this);
-    fs.appendFile("output.txt", productData + "\n", (err) => {
-      if (err) {
-        console.error(err);
-      }
+    Product.fetchAll((products) => {
+      products.push(this);
+      fs.writeFile("products.json", JSON.stringify(products), (err) => {
+        if (err) {
+          console.error(err);
+        }
+      });
     });
   }
 
   static fetchAll(cb) {
-    fs.readFile("output.txt", "utf-8", (err, data) => {
+    fs.readFile("products.json", "utf-8", (err, data) => {
       if (err || !data.trim()) {
         cb([]);
       } else {
-        const productLines = data.trim().split("\n");
-        const products = productLines.map((line) => {
-          const parsedProduct = JSON.parse(line);
-          const product = new Product(
-            parsedProduct.title,
-            parsedProduct.imageUrl,
-            parsedProduct.price,
-            parsedProduct.description
-          );
-          product.id = parsedProduct.id;
-          return product;
-        });
-        cb(products);
+        cb(JSON.parse(data));
       }
     });
   }

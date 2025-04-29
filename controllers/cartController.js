@@ -1,3 +1,5 @@
+const Cart = require("../models/cart");
+
 exports.getCart = (req, res, next) => {
   res.render("shop/cart", {
     path: "/cart",
@@ -5,7 +7,8 @@ exports.getCart = (req, res, next) => {
 };
 
 exports.postCart = (req, res, next) => {
-  console.log(req.body.productId);
+  const { productId, productPrice } = req.body;
+  Cart.addProduct(productId, +productPrice);
   res.render("shop/cart", {
     path: "/cart",
   });

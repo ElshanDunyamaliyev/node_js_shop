@@ -3,12 +3,140 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="/css/main.css" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Add Product</title>
+    <link rel="stylesheet" href="/css/shop.css" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f7f7f7;
+        margin: 0;
+        padding: 0;
+      }
+
+      .products-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        padding: 40px 20px;
+      }
+
+      .product-card {
+        width: 100%;
+        max-width: 300px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+        background-color: #fff;
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.2s ease;
+      }
+
+      .product-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .product-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-bottom: 1px solid #eee;
+      }
+
+      .product-card-content {
+        padding: 15px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .product-card-content h2 {
+        font-size: 1.4rem;
+        margin: 10px 0;
+        text-align: center;
+        color: #333;
+      }
+
+      .product-card-content p {
+        margin: 5px 0;
+        font-size: 1rem;
+        color: #555;
+      }
+
+      .btnContainer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        margin-top: 15px;
+      }
+
+      .btn {
+        padding: 10px 20px;
+        border: none;
+        background-color: #6a0dad;
+        color: #fff;
+        border-radius: 6px;
+        font-weight: bold;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+        font-size: 0.9rem;
+      }
+
+      .btn:hover {
+        background-color: #4b0082;
+      }
+
+      .btn:focus {
+        outline: none;
+      }
+
+      form {
+        margin: 0;
+      }
+
+      .no-products {
+        text-align: center;
+        margin-top: 80px;
+        font-size: 2rem;
+        color: #666;
+      }
+    </style>
   </head>
+
   <body>
     <%- include('../includes/navigation.ejs') %>
-
-    <h1>Admin Products</h1>
+    <main>
+      <% if (products.length > 0) { %>
+      <h1 style="text-align: center">My Products</h1>
+      <div class="products-container">
+        <% products.forEach(product => { %>
+        <div class="product-card">
+          <img src="<%= product.imageUrl %>" alt="<%= product.title %> Image" />
+          <h2><%= product.title %></h2>
+          <p><strong>Price: </strong> $<%= product.price %></p>
+          <p><strong>Description: </strong><%= product.description %></p>
+          <div class="btnContainer">
+            <a class="btn" href="/admin/edit-product/<%= product.id %>"
+              >Edit Product</a
+            >
+            <a class="btn" href="/admin/delete-product/<%= product.id %>"
+              >Delete Product</a
+            >
+          </div>
+        </div>
+        <% }) %>
+      </div>
+      <% } else { %>
+      <div class="no-products">
+        <h1>No Products Available</h1>
+      </div>
+      <% } %>
+    </main>
   </body>
 </html>

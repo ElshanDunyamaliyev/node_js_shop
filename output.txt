@@ -1,3 +1,0 @@
-
-{"id":"1","title":"test","imageUrl":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR132TBAD0-GhGhN8_2Xr-3obkFd4NzFbk6Hg&s","price":"20","description":"12"}
-{"title":"person","imageUrl":"https://buffer.com/resources/content/images/2024/11/free-stock-image-sites.png","price":"30","description":"test","id":"0.5446518860604865"}
